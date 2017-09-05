@@ -3,6 +3,7 @@
 import os
 import re
 import scandir
+import io
 
 
 def is_s3(path):
@@ -39,13 +40,24 @@ def _scan_s3(path, pattern=None):
     pass
 
 
-def open(path):
-    pass
+def read(path):
+    """Read a file to BytesIO.
+
+    Args:
+        path (str)
+    """
+    return (
+        _read_s3(path) if is_s3(path) else
+        _read_local(path)
+    )
 
 
-def _open_local(path):
-    pass
+def _read_local(path):
+    """Open a local file.
+    """
+    with open(path, 'rb') as fh:
+        return io.BytesIO(fh.read())
 
 
-def _open_s3(path):
+def _read_s3(path):
     pass

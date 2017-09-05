@@ -12,7 +12,7 @@ from twitter import Tweet
 def parse_minute(path):
     """Parse a raw minute file.
     """
-    with bz2.open(path) as fh:
+    with bz2.open(fs.read(path)) as fh:
         for line in fh.readlines():
 
             raw = ujson.loads(line)
