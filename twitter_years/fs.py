@@ -7,7 +7,7 @@ import io
 
 from urllib.parse import urlparse
 
-from services import s3
+from .services import s3
 
 
 def is_s3(path):

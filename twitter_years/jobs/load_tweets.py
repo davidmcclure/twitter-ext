@@ -3,10 +3,10 @@
 import click
 import bz2
 import ujson
-import fs
 
-from utils import scan_paths, get_spark
-from twitter import Tweet
+from twitter_years import fs
+from twitter_years.utils import scan_paths, get_spark
+from twitter_years.models import Tweet
 
 
 def parse_minute(path):
