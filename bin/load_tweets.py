@@ -3,6 +3,7 @@
 import click
 import bz2
 import ujson
+import fs
 
 from utils import scan_paths, get_spark
 from twitter import Tweet
@@ -30,7 +31,7 @@ def main(in_dir, out_dir):
     """
     sc, spark = get_spark()
 
-    paths = sc.parallelize(scan_paths(in_dir, '\.json'))
+    paths = sc.parallelize(fs.scan(in_dir, '\.json'))
 
     rows = paths.flatMap(parse_minute)
 
