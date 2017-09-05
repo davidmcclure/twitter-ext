@@ -19,11 +19,10 @@ def parse_minute(path):
 
             raw = ujson.loads(line)
 
-            try:
-                yield Tweet.from_api_json(raw)
+            if 'delete' in raw:
+                continue
 
-            except:
-                pass
+            yield Tweet.from_api_json(raw)
 
 
 @click.command()
