@@ -30,6 +30,6 @@ class Tweet(Model):
     schema = T.StructType([
         T.StructField('id', T.StringType(), nullable=False),
         T.StructField('text', T.StringType(), nullable=False),
-        T.StructField('timestamp_ms', T.IntegerType(), nullable=False),
+        T.StructField('timestamp_ms', T.StringType(), nullable=False),
         T.StructField('lang', T.StringType(), nullable=False),
     ])

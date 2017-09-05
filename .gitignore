@@ -99,3 +99,6 @@ ENV/
 .mypy_cache/
 
 metastore_db
+spark-warehouse
+/data
+*.parquet
