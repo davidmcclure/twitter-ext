@@ -20,13 +20,7 @@ def parse_minute(path):
             raw = ujson.loads(line)
 
             try:
-
-                yield Tweet(
-                    id=raw['id_str'],
-                    text=raw['text'],
-                    timestamp_ms=raw['timestamp_ms'],
-                    lang=raw['lang'],
-                )
+                yield Tweet.from_api_json(raw)
 
             except:
                 pass
@@ -46,7 +40,7 @@ def main(in_dir, out_dir):
     rows = paths.flatMap(parse_minute)
 
     df = spark.createDataFrame(rows, Tweet.schema)
-    df.write.parquet(out_dir)
+    df.write.mode('overwrite').parquet(out_dir)
 
 
 if __name__ == '__main__':

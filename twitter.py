@@ -33,3 +33,14 @@ class Tweet(Model):
         T.StructField('timestamp_ms', T.StringType(), nullable=False),
         T.StructField('lang', T.StringType(), nullable=False),
     ])
+
+    @classmethod
+    def from_api_json(cls, json):
+        """Make a row from the raw API JSON.
+        """
+        return cls(
+            id=json['id_str'],
+            text=json['text'],
+            timestamp_ms=json['timestamp_ms'],
+            lang=json['lang'],
+        )
