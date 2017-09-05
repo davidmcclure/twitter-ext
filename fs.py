@@ -5,6 +5,10 @@ import re
 import scandir
 import io
 
+from urllib.parse import urlparse
+
+from services import s3
+
 
 def is_s3(path):
     """Is a path an S3 object path?
@@ -37,7 +41,17 @@ def _scan_local(path, pattern=None):
 
 
 def _scan_s3(path, pattern=None):
-    pass
+    """Scan S3 paths.
+    """
+    parsed = urlparse(path)
+
+    bucket = s3.Bucket(parsed.netloc)
+
+    prefix = parsed.path.lstrip('/')
+
+    for obj in bucket.objects.filter(Prefix=prefix):
+        if not pattern or re.search(pattern, obj.key):
+            yield os.path.join('s3://', bucket.name, obj.key)
 
 
 def read(path):
