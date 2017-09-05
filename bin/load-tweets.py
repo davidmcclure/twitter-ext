@@ -26,8 +26,8 @@ def parse_minute(path):
 
 
 @click.command()
-@click.argument('in_dir')
-@click.argument('out_dir')
+@click.option('--in_dir', default='data')
+@click.option('--out_dir', default='tweets.parquet')
 def main(in_dir, out_dir):
     """Ingest tweets.
     """
