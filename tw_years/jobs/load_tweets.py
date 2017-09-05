@@ -4,9 +4,9 @@ import click
 import bz2
 import ujson
 
-from twitter_years import fs
-from twitter_years.utils import scan_paths, get_spark
-from twitter_years.models import Tweet
+from tw_years import fs
+from tw_years.utils import scan_paths, get_spark
+from tw_years.models import Tweet
 
 
 def parse_minute(path):
