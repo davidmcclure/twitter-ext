@@ -2,4 +2,5 @@
 ipython
 click
 scandir
+boto3
 ujson
