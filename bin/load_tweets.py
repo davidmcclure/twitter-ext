@@ -4,11 +4,8 @@ import click
 import bz2
 import ujson
 
-from pyspark import SparkContext
-from pyspark.sql import SparkSession
-
+from utils import scan_paths, get_spark
 from twitter import Tweet
-from utils import scan_paths
 
 
 def parse_minute(path):
@@ -31,14 +28,14 @@ def parse_minute(path):
 def main(in_dir, out_dir):
     """Ingest tweets.
     """
-    sc = SparkContext()
-    spark = SparkSession(sc).builder.getOrCreate()
+    sc, spark = get_spark()
 
     paths = sc.parallelize(scan_paths(in_dir, '\.json'))
 
     rows = paths.flatMap(parse_minute)
 
     df = spark.createDataFrame(rows, Tweet.schema)
+
     df.write.mode('overwrite').parquet(out_dir)
 
 
