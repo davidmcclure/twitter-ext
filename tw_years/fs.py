@@ -16,6 +16,19 @@ def is_s3(path):
     return path.startswith('s3://')
 
 
+def parse_s3_url(url):
+    """Parse the bucket name and path from a s3:// URL.
+
+    Args:
+        url (str)
+
+    Returns: bucket name, prefix
+    """
+    parsed = urlparse(url)
+
+    return parsed.netloc, parsed.path.lstrip('/')
+
+
 def scan(path, pattern=None):
     """Generate files that match a pattern.
 
@@ -43,11 +56,9 @@ def _scan_local(path, pattern=None):
 def _scan_s3(path, pattern=None):
     """Scan S3 paths.
     """
-    parsed = urlparse(path)
+    name, prefix = parse_s3_url(path)
 
-    bucket = s3.Bucket(parsed.netloc)
-
-    prefix = parsed.path.lstrip('/')
+    bucket = s3.Bucket(name)
 
     for obj in bucket.objects.filter(Prefix=prefix):
 
@@ -78,10 +89,8 @@ def _read_local(path):
 def _read_s3(path):
     """Read an S3 path.
     """
-    parsed = urlparse(path)
+    bucket, key = parse_s3_url(path)
 
-    key = parsed.path.lstrip('/')
-
-    obj = s3.Object(parsed.netloc, key)
+    obj = s3.Object(bucket, key)
 
     return io.BytesIO(obj.get()['Body'].read())
