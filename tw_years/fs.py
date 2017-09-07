@@ -13,7 +13,7 @@ from tw_years.services import s3
 def is_s3(path):
     """Is a path an S3 object path?
     """
-    return path.startswith('s3://')
+    return bool(re.match('s3[a|n]?:\/\/', path))
 
 
 def parse_s3_url(url):
