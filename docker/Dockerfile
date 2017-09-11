@@ -18,11 +18,10 @@ RUN apt-get update && apt-get install -y \
   libffi-dev \
   libxml2-dev
 
-RUN git clone https://github.com/pyenv/pyenv.git .pyenv
-
-ENV HOME  /
-ENV PYENV_ROOT $HOME/.pyenv
+ENV PYENV_ROOT /opt/pyenv
 ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
+
+RUN git clone https://github.com/pyenv/pyenv.git $PYENV_ROOT
 
 RUN pyenv install 3.6.1
 RUN pyenv global 3.6.1
@@ -46,3 +45,11 @@ RUN curl -sL --retry 3 \
   | tar x -C /opt/ \
  && mv /opt/$SPARK_PACKAGE $SPARK_HOME \
  && chown -R root:root $SPARK_HOME
+
+# Code
+
+ENV YEARS_ROOT /opt/years
+
+RUN git clone https://github.com/davidmcclure/twitter-years.git $YEARS_ROOT
+RUN python -m venv $YEARS_ROOT/env
+RUN $YEARS_ROOT/env/bin/pip install -r $YEARS_ROOT/requirements.txt
