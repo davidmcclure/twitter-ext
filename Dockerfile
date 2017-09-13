@@ -48,8 +48,7 @@ RUN curl -sL --retry 3 \
 
 # Code
 
-ENV YEARS_ROOT /opt/years
+ADD . /code
+WORKDIR /code
 
-RUN git clone https://github.com/davidmcclure/twitter-years.git $YEARS_ROOT
-RUN python -m venv $YEARS_ROOT/env
-RUN $YEARS_ROOT/env/bin/pip install -r $YEARS_ROOT/requirements.txt
+RUN pip install -r requirements.txt
