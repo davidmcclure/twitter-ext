@@ -3,6 +3,9 @@ FROM ubuntu:xenial
 
 # Python 3.6
 
+ENV LC_ALL C.UTF-8
+ENV LANG C.UTF-8
+
 RUN apt-get update && apt-get install -y \
   htop \
   git \
@@ -46,9 +49,13 @@ RUN curl -sL --retry 3 \
  && mv /opt/$SPARK_PACKAGE $SPARK_HOME \
  && chown -R root:root $SPARK_HOME
 
+COPY docker/spark-defaults.conf $SPARK_HOME/conf
+COPY docker/spark-env.sh $SPARK_HOME/conf
+
 # Code
 
 ADD . /code
 WORKDIR /code
 
 RUN pip install -r requirements.txt
+RUN python setup.py develop
