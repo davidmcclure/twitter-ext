@@ -4,3 +4,5 @@ version: '2'
 services:
   dev:
     build: .
+    volumes:
+      - .:/code
