@@ -102,3 +102,4 @@ metastore_db
 spark-warehouse
 /data
 *.parquet
+.aws
