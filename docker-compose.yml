@@ -8,3 +8,5 @@ services:
       - docker/aws.env
     volumes:
       - .:/code
+    ports:
+      - '8888:8888'
