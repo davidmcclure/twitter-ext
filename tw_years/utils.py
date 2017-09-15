@@ -3,6 +3,7 @@
 import re
 import os
 import scandir
+import csv
 
 from pyspark import SparkContext
 from pyspark.sql import SparkSession
@@ -32,3 +33,22 @@ def scan_paths(root, pattern=None):
             # Match the extension.
             if not pattern or re.search(pattern, name):
                 yield os.path.join(root, name)
+
+
+def dump_csv(rows, path, colnames):
+    """Dump rows to a CSV file.
+
+    Args:
+        rows (list): List of row tuples.
+        path (str): Output path.
+        colnames (list): Header row names.
+    """
+    with open(path, 'w') as fh:
+
+        writer = csv.writer(fh)
+
+        # Write header row.
+        writer.writerow(colnames)
+
+        for row in rows:
+            writer.writerow(row)

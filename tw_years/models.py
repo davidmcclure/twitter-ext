@@ -41,8 +41,10 @@ class Tweet(Model):
             T.StructField('name', T.StringType()),
             T.StructField('description', T.StringType()),
             T.StructField('location', T.StringType()),
+            T.StructField('followers_count', T.IntegerType()),
             T.StructField('statuses_count', T.IntegerType()),
             T.StructField('url', T.StringType()),
+            T.StructField('lang', T.StringType()),
         ])),
 
     ])
@@ -65,8 +67,10 @@ class Tweet(Model):
                 name=json['user']['name'],
                 description=json['user']['description'],
                 location=json['user']['location'],
+                followers_count=json['user']['followers_count'],
                 statuses_count=json['user']['statuses_count'],
                 url=json['user']['url'],
+                lang=json['user']['lang'],
             ),
 
         )
