@@ -43,6 +43,8 @@ def dump_csv(rows, path, colnames):
         path (str): Output path.
         colnames (list): Header row names.
     """
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+
     with open(path, 'w') as fh:
 
         writer = csv.writer(fh)

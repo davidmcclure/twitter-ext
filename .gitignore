@@ -100,6 +100,5 @@ ENV/
 
 /docker/*.env
 /data
-metastore_db
 spark-warehouse
-*.parquet
+metastore_db

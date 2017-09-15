@@ -9,8 +9,8 @@ from tw_years.utils import get_spark, dump_csv
 
 
 @click.command()
-@click.option('--tweet_dir', default='tweets.parquet')
-@click.option('--result_path', default='text-len-histogram.csv')
+@click.option('--tweet_dir', default='data/tweets.parquet')
+@click.option('--result_path', default='results/text-len-hist/counts.csv')
 def main(tweet_dir, result_path):
     """Make a histogram of tweet character counts.
     """

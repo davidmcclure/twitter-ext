@@ -4,3 +4,5 @@ click
 scandir
 boto3
 ujson
+matplotlib
+jupyter
