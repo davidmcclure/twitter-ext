@@ -24,8 +24,8 @@ def parse_minute(path):
 
 
 @click.command()
-@click.option('--in_dir', default='data')
-@click.option('--out_dir', default='tweets.parquet')
+@click.option('--in_dir', default='s3a://twitter-ia/2017/06/01/00')
+@click.option('--out_dir', default='s3a://twitter-years/tweets.paruet')
 def main(in_dir, out_dir):
     """Ingest tweets.
     """
