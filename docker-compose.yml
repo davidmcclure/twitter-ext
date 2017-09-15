@@ -4,5 +4,7 @@ version: '3'
 services:
   dev:
     build: .
+    env_file:
+      - docker/aws.env
     volumes:
       - .:/code

@@ -51,7 +51,6 @@ RUN curl -sL --retry 3 \
 
 COPY docker/spark-env.sh $SPARK_HOME/conf
 COPY docker/spark-defaults.conf $SPARK_HOME/conf
-COPY docker/.aws /root/.aws
 
 # Code
 

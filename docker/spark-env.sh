@@ -70,6 +70,3 @@ PYSPARK_DRIVER_PYTHON=ipython
 
 # Use common hash seed across nodes (needed for reduceByKey).
 PYTHONHASHSEED=1
-
-#AWS_ACCESS_KEY_ID=
-#AWS_SECRET_ACCESS_KEY=

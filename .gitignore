@@ -98,8 +98,8 @@ ENV/
 # mypy
 .mypy_cache/
 
+/docker/*.env
+/data
 metastore_db
 spark-warehouse
-/data
 *.parquet
-.aws
