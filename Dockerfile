@@ -54,7 +54,7 @@ COPY docker/spark-defaults.conf $SPARK_HOME/conf
 
 # Code
 
-ADD . /code
+ADD ./code /code
 WORKDIR /code
 
 RUN pip install -r requirements.txt

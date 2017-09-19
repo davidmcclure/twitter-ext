@@ -99,6 +99,6 @@ ENV/
 .mypy_cache/
 
 /docker/*.env
-/data
+/code/data
 spark-warehouse
 metastore_db
