@@ -1,0 +1,8 @@
+---
+
+- name: Provision Spark nodes
+  hosts: localhost
+
+  roles:
+    - cluster/master
+    - cluster/worker

@@ -1,0 +1,12 @@
+---
+
+dependencies:
+
+  - role: node
+
+    ec2_name: spark-master
+    ec2_tag: spark-master
+
+    ec2_instance_type: m3.medium
+
+    ec2_group: spark

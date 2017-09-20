@@ -1,0 +1,16 @@
+---
+
+ec2_region: us-east-1
+ec2_image: ami-9eaa1cf6
+
+ec2_instance_count: 1
+
+# TODO: vault
+ec2_subnet: subnet-52f7fb68
+ec2_keypair: dclure
+
+# Role
+ec2_name: null
+ec2_tag: null
+ec2_instance_type: null
+ec2_group: null
