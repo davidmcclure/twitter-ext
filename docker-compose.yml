@@ -2,8 +2,10 @@
 version: '3'
 
 services:
+
   dev:
     build: .
+    image: twitter-dev
     env_file:
       - docker/aws.env
     volumes:
