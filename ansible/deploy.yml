@@ -6,10 +6,3 @@
 
   roles:
     - docker
-
-  tasks:
-    - name: Create master container
-      docker_container:
-        name: master
-        image: twitter-spark
-        command: bin/spark-class org.apache.spark.deploy.master.Master -h master
