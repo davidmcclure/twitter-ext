@@ -1,4 +1,4 @@
 
-# LSM / Twitter
+# Twitter + Spark
 
 Feature extraction harness for Twitter data.
