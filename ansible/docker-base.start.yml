@@ -3,4 +3,4 @@
 - name: Provision an AMI-config instance
   hosts: localhost
   roles:
-    - node/roles/base
+    - node/roles/docker-base
