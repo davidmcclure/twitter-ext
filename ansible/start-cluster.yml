@@ -3,4 +3,4 @@
 - name: Provision a cluster
   hosts: localhost
   roles:
-    - node/roles/base
+    - node/roles/master

@@ -5,7 +5,7 @@ services:
 
   dev:
     build: .
-    image: twitter-dev
+    image: dclure/twitter-dev
     env_file:
       - docker/aws.env
     volumes:

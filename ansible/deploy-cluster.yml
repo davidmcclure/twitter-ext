@@ -1,0 +1,16 @@
+---
+
+- name: Deploy master
+  become: yes
+  hosts: tag_lsm_spark_master
+
+  tasks:
+
+    - name: Run container
+      docker_container:
+        name: master
+        image: dclure/twitter-dev
+        command: spark-class org.apache.spark.deploy.master.Master
+        state: started
+        ports:
+          - '8080:8080'
