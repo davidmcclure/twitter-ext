@@ -1,9 +1,0 @@
----
-
-dependencies:
-
-  - role: node
-    ec2_name: spark-image
-    ec2_tag: spark-image
-    ec2_instance_type: m3.medium
-    ec2_group: spark
