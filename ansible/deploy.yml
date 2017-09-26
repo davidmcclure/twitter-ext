@@ -4,5 +4,25 @@
   become: yes
   hosts: tag_lsm_spark_master
 
-  roles:
-    - docker
+  #roles:
+    #- docker
+
+  tasks:
+
+    - name: Run container
+      docker_container:
+        name: master
+        image: dclure/twitter-dev
+        command: spark-class org.apache.spark.deploy.master.Master
+        state: started
+        ports:
+          - '8080:8080'
+
+    - name: Run container
+      docker_container:
+        name: master
+        image: dclure/twitter-dev
+        command: spark-class org.apache.spark.deploy.worker.Worker
+        state: started
+        ports:
+          - '8080:8080'
