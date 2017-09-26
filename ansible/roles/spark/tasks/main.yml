@@ -17,27 +17,41 @@
       instance-state-name: running
       'tag:mit': spark-master
 
-- name: Set the master host
+- name: Master host
   set_fact:
     spark_master_host:
       '{{ master.instances[0].private_dns_name }}'
 
-- name: Set the worker count
+- name: Worker count
   set_fact:
     spark_worker_count:
       '{{ groups["tag_mit_spark_worker"] | length }}'
 
-- name: Set the CPU count on each slave
+- name: CPU count on each slave
   set_fact:
     spark_worker_vcpus:
       '{{ hostvars[groups["tag_mit_spark_worker"][0]]
       ["ansible_processor_vcpus"] }}'
 
-#- name: Run master
-  #docker_container:
-    #name: master
-    #image: dclure/twitter-dev
-    #command: spark-class org.apache.spark.deploy.master.Master
-    #state: started
-    #ports:
-      #- '8080:8080'
+- name: Run master
+  when: '"tag_mit_spark_master" in group_names'
+  docker_container:
+    name: master
+    image: dclure/twitter-dev
+    command: spark-class org.apache.spark.deploy.master.Master
+    state: started
+    ports:
+      - '8080:8080'
+      - '7077:7077'
+
+- name: Run workers
+  when: '"tag_mit_spark_worker" in group_names'
+  docker_container:
+    name: worker
+    image: dclure/twitter-dev
+    command:
+      'spark-class org.apache.spark.deploy.worker.Worker
+      spark://{{ spark_master_host }}:7077'
+    state: started
+    ports:
+      - '8081:8081'
