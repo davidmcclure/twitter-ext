@@ -1,0 +1,7 @@
+---
+
+- name: Provision an instance for image deployment
+  hosts: localhost
+
+  roles:
+    - cluster/image

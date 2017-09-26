@@ -1,0 +1,7 @@
+---
+
+- name: Deploy image
+  become: yes
+  hosts: tag_lsm_spark_image
+  roles:
+    - docker
