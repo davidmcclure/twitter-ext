@@ -2,7 +2,7 @@
 
 dependencies:
 
-  - role: node
+  - role: ec2-instance
     ec2_name: spark-worker
     ec2_tag: spark-worker
     ec2_instance_type: m3.medium

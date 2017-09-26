@@ -2,7 +2,7 @@
 
 dependencies:
 
-  - role: node
+  - role: ec2-instance
     # Ubuntu 14
     ec2_image: ami-9eaa1cf6
     ec2_name: docker-base

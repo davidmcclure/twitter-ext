@@ -2,12 +2,8 @@
 
 - name: Deploy master
   become: yes
-  hosts: tag_mit_spark_master
+  hosts:
+    - tag_mit_spark_master
+    - tag_mit_spark_worker
   roles:
-    - spark/master
-
-#- name: Deploy workers
-  #become: yes
-  #hosts: tag_mit_spark_worker
-  #roles:
-    #- spark/worker
+    - spark

@@ -1,0 +1,43 @@
+---
+
+- name: Push boto config
+  template:
+    src: boto.cfg.j2
+    dest: /etc/boto.cfg
+
+- name: Install boto3, for ec2_instance_facts
+  pip:
+    name: boto3
+
+- name: Get master facts
+  register: master
+  ec2_instance_facts:
+    region: '{{ ec2_region }}'
+    filters:
+      instance-state-name: running
+      'tag:mit': spark-master
+
+- name: Set the master host
+  set_fact:
+    spark_master_host:
+      '{{ master.instances[0].private_dns_name }}'
+
+- name: Set the worker count
+  set_fact:
+    spark_worker_count:
+      '{{ groups["tag_mit_spark_worker"] | length }}'
+
+- name: Set the CPU count on each slave
+  set_fact:
+    spark_worker_vcpus:
+      '{{ hostvars[groups["tag_mit_spark_worker"][0]]
+      ["ansible_processor_vcpus"] }}'
+
+#- name: Run master
+  #docker_container:
+    #name: master
+    #image: dclure/twitter-dev
+    #command: spark-class org.apache.spark.deploy.master.Master
+    #state: started
+    #ports:
+      #- '8080:8080'
