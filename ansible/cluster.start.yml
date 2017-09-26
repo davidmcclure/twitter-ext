@@ -3,4 +3,4 @@
 - name: Provision a cluster
   hosts: localhost
   roles:
-    - node/roles/master
+    - ec2-instance/roles/master
