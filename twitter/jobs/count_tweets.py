@@ -2,8 +2,8 @@
 
 import click
 
-from tw_years import fs
-from tw_years.utils import get_spark
+from twitter import fs
+from twitter.utils import get_spark
 
 
 @click.command()

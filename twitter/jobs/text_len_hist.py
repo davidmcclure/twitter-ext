@@ -4,8 +4,8 @@ import click
 
 from operator import add
 
-from tw_years import fs
-from tw_years.utils import get_spark, dump_csv
+from twitter import fs
+from twitter.utils import get_spark, dump_csv
 
 
 @click.command()
