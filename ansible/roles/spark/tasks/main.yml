@@ -48,31 +48,8 @@
 
 - name: Run master
   when: '"tag_mit_spark_master" in group_names'
-  docker_container:
-    name: master
-    image: dclure/twitter-dev
-    command: spark-class org.apache.spark.deploy.master.Master
-    state: started
-    restart: true
-    volumes:
-      - /etc/spark:/opt/spark-2.2.0/conf
-      - /mnt:/mnt
-    ports:
-      - '8080:8080'
-      - '7077:7077'
+  docker_container: '{{ spark_master_opts }}'
 
 - name: Run workers
   when: '"tag_mit_spark_worker" in group_names'
-  docker_container:
-    name: worker
-    image: dclure/twitter-dev
-    command:
-      'spark-class org.apache.spark.deploy.worker.Worker
-      spark://{{ spark_master_host }}:7077'
-    state: started
-    restart: true
-    volumes:
-      - /etc/spark:/opt/spark-2.2.0/conf
-      - /mnt:/mnt
-    ports:
-      - '8081:8081'
+  docker_container: '{{ spark_worker_opts }}'

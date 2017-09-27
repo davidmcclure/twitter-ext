@@ -10,7 +10,7 @@ def work(i):
     return i + 1
 
 
-def main(sc, spark):
+def main():
     sc, spark = get_spark()
     data = sc.parallelize(range(36))
     result = data.map(work).collect()
