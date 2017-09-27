@@ -41,15 +41,16 @@ def main(tweet_dir, result_path):
 
     tweets = spark.read.parquet(tweet_dir)
 
-    matches = (
-        tweets.rdd
-        .filter(lambda t: t.user.location)
-        .map(match_city)
-        .filter(bool)
-        .toDF()
-    )
+    matches = tweets.rdd \
+        .filter(lambda t: t.user.location) \
+        .map(match_city) \
+        .filter(bool) \
+        .toDF(('city', 'location', 'text'))
 
-    matches.write.mode('overwrite').csv(result_path)
+    matches.write \
+        .mode('overwrite') \
+        .option('header', 'true') \
+        .csv(result_path)
 
 
 if __name__ == '__main__':
