@@ -14,9 +14,13 @@ def work(i):
 @click.command()
 @click.argument('n', type=int)
 def main(n):
+    """Test parallelization.
+    """
     sc, spark = get_spark()
+
     data = sc.parallelize(range(n))
     result = data.map(work).collect()
+
     print(result)
 
 
