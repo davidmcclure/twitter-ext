@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
   make \
   curl \
   wget \
+  tmux \
   build-essential \
   libssl-dev \
   zlib1g-dev \
