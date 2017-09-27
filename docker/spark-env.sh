@@ -67,6 +67,3 @@
 
 # Use ipython for the driver.
 PYSPARK_DRIVER_PYTHON=ipython
-
-# Use common hash seed across nodes (needed for reduceByKey).
-PYTHONHASHSEED=1

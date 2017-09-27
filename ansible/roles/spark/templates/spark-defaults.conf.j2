@@ -26,4 +26,20 @@
 # spark.driver.memory              5g
 # spark.executor.extraJavaOptions  -XX:+PrintGCDetails -Dkey=value -Dnumbers="one two three"
 
-spark.jars.packages org.apache.hadoop:hadoop-aws:2.7.3
+spark.master {{ spark_master_url }}
+
+spark.default.parallelism {{ spark_default_parallelism }}
+
+spark.jars.packages {{ spark_packages | join(',') }}
+
+spark.executor.memory {{ spark_executor_memory }}
+
+spark.driver.memory {{ spark_driver_memory }}
+
+spark.task.maxFailures {{ spark_task_max_failures }}
+
+# Don't write data to _temporary.
+spark.hadoop.mapreduce.fileoutputcommitter.algorithm.version 2
+
+# Avoid memory errors when reading large dfs.
+spark.sql.parquet.enableVectorizedReader false

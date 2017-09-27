@@ -33,6 +33,19 @@
       '{{ hostvars[groups["tag_mit_spark_worker"][0]]
       ["ansible_processor_vcpus"] }}'
 
+- name: Create config directory
+  file:
+    path: /etc/spark
+    state: directory
+
+- name: Render configs
+  template:
+    src: '{{ item }}.j2'
+    dest: /etc/spark/{{ item }}
+  with_items:
+    - spark-defaults.conf
+    - spark-env.sh
+
 - name: Run master
   when: '"tag_mit_spark_master" in group_names'
   docker_container:
@@ -40,6 +53,9 @@
     image: dclure/twitter-dev
     command: spark-class org.apache.spark.deploy.master.Master
     state: started
+    restart: true
+    volumes:
+      - /etc/spark:/opt/spark-2.2.0/conf
     ports:
       - '8080:8080'
       - '7077:7077'
@@ -53,5 +69,8 @@
       'spark-class org.apache.spark.deploy.worker.Worker
       spark://{{ spark_master_host }}:7077'
     state: started
+    restart: true
+    volumes:
+      - /etc/spark:/opt/spark-2.2.0/conf
     ports:
       - '8081:8081'
