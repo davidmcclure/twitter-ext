@@ -1,5 +1,6 @@
 
 
+import click
 import time
 
 from twitter.utils import get_spark
@@ -10,9 +11,11 @@ def work(i):
     return i + 1
 
 
-def main():
+@click.command()
+@click.argument('n', type=int)
+def main(n):
     sc, spark = get_spark()
-    data = sc.parallelize(range(36))
+    data = sc.parallelize(range(n))
     result = data.map(work).collect()
     print(result)
 
