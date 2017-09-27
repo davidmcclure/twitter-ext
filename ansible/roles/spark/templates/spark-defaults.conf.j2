@@ -32,9 +32,11 @@ spark.default.parallelism {{ spark_default_parallelism }}
 
 spark.jars.packages {{ spark_packages | join(',') }}
 
+spark.driver.memory {{ spark_driver_memory }}
+
 spark.executor.memory {{ spark_executor_memory }}
 
-spark.driver.memory {{ spark_driver_memory }}
+spark.local.dir {{ spark_local_dir }}
 
 spark.task.maxFailures {{ spark_task_max_failures }}
 
