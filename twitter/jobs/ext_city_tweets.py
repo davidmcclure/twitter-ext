@@ -8,7 +8,7 @@ from twitter.utils import get_spark
 
 cities = [
     'boston',
-    'san francico',
+    'san francisco',
     'los angeles',
     'chicago',
     'dallas',
