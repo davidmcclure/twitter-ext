@@ -9,6 +9,7 @@ services:
     env_file:
       - docker/aws.env
     volumes:
-      - .:/code
+      - ./code:/code
+      - ./data:/code/data
     ports:
       - '8888:8888'
