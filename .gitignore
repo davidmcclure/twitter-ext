@@ -98,7 +98,7 @@ ENV/
 # mypy
 .mypy_cache/
 
+# twitter-dev
 /docker/*.env
-/data
 spark-warehouse
 metastore_db
