@@ -47,29 +47,13 @@
     - spark-env.sh
 
 - name: Start master
+  include_tasks: start.yml
   when: '"tag_mit_spark_master" in group_names'
-  docker_container:
-    image: dclure/twitter-dev
-    name: twitter-dev
+  vars:
     command: spark-class org.apache.spark.deploy.master.Master
-    state: started
-    network_mode: host
-    pull: true
-    restart: true
-    volumes:
-      - /etc/spark:/opt/spark-2.2.0/conf
-      - /mnt:/mnt
 
-- name: Start worker
+- name: Start workers
+  include_tasks: start.yml
   when: '"tag_mit_spark_worker" in group_names'
-  docker_container:
-    image: dclure/twitter-dev
-    name: twitter-dev
+  vars:
     command: spark-class org.apache.spark.deploy.worker.Worker
-    state: started
-    network_mode: host
-    pull: true
-    restart: true
-    volumes:
-      - /etc/spark:/opt/spark-2.2.0/conf
-      - /mnt:/mnt

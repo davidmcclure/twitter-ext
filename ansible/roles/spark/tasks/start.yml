@@ -4,7 +4,7 @@
   docker_container:
     image: dclure/twitter-dev
     name: twitter-dev
-    command: '{{ spark_command }}'
+    command: '{{ command }}'
     state: started
     network_mode: host
     pull: true
