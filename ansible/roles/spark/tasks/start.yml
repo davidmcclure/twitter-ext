@@ -1,0 +1,14 @@
+---
+
+- name: Start container
+  docker_container:
+    image: dclure/twitter-dev
+    name: twitter-dev
+    command: '{{ spark_command }}'
+    state: started
+    network_mode: host
+    pull: true
+    restart: true
+    volumes:
+      - /etc/spark:/opt/spark-2.2.0/conf
+      - /mnt:/mnt

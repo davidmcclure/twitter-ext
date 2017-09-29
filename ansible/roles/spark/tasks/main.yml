@@ -46,23 +46,26 @@
     - spark-defaults.conf
     - spark-env.sh
 
-- name: Set master command
+- name: Start master
   when: '"tag_mit_spark_master" in group_names'
-  set_fact:
-    spark_command: spark-class org.apache.spark.deploy.master.Master
-
-- name: Set worker command
-  when: '"tag_mit_spark_worker" in group_names'
-  set_fact:
-    spark_command:
-      'spark-class org.apache.spark.deploy.worker.Worker
-      {{ spark_master_url }}'
-
-- name: Run container
   docker_container:
     image: dclure/twitter-dev
     name: twitter-dev
-    command: '{{ spark_command }}'
+    command: spark-class org.apache.spark.deploy.master.Master
+    state: started
+    network_mode: host
+    pull: true
+    restart: true
+    volumes:
+      - /etc/spark:/opt/spark-2.2.0/conf
+      - /mnt:/mnt
+
+- name: Start worker
+  when: '"tag_mit_spark_worker" in group_names'
+  docker_container:
+    image: dclure/twitter-dev
+    name: twitter-dev
+    command: spark-class org.apache.spark.deploy.worker.Worker
     state: started
     network_mode: host
     pull: true

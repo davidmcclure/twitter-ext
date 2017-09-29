@@ -92,8 +92,6 @@ def main(src, dest):
         .mode('overwrite') \
         .parquet(dest)
 
-    print(matches.count())
-
 
 if __name__ == '__main__':
     main()
