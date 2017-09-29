@@ -5,7 +5,7 @@ import bz2
 import ujson
 
 from twitter import fs
-from twitter.utils import scan_paths, get_spark
+from twitter.utils import get_spark
 from twitter.models import Tweet
 
 
