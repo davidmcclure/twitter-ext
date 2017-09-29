@@ -7,7 +7,7 @@ from twitter.utils import get_spark
 
 
 @click.command()
-@click.option('--tweet_dir', default='tweets.parquet')
+@click.option('--tweet_dir', default='data/tweets.parquet')
 def main(tweet_dir):
     """Count tweets.
     """
