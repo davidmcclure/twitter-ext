@@ -9,14 +9,14 @@ from twitter.utils import get_spark, dump_csv
 
 
 @click.command()
-@click.option('--tweet_dir', default='data/tweets.parquet')
-@click.option('--result_path', default='results/text-len-hist/counts.csv')
-def main(tweet_dir, result_path):
+@click.option('--src', default='data/tweets.parquet')
+@click.option('--dest', default='data/text-len-hist.csv')
+def main(src, dest):
     """Make a histogram of tweet character counts.
     """
     sc, spark = get_spark()
 
-    tweets = spark.read.parquet(tweet_dir)
+    tweets = spark.read.parquet(src)
 
     counts = (
         tweets.rdd
@@ -26,7 +26,7 @@ def main(tweet_dir, result_path):
         .collect()
     )
 
-    dump_csv(counts, result_path, ('text_len', 'count'))
+    dump_csv(counts, dest, ('text_len', 'count'))
 
 
 if __name__ == '__main__':

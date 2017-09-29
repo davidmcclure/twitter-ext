@@ -83,3 +83,12 @@ class CityTweet(Model):
         T.StructField('location', T.StringType()),
         T.StructField('text', T.StringType()),
     ])
+
+
+class StateTweet(Model):
+
+    schema = T.StructType([
+        T.StructField('state', T.StringType()),
+        T.StructField('location', T.StringType()),
+        T.StructField('text', T.StringType()),
+    ])

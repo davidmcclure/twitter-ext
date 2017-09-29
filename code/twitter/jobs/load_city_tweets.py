@@ -7,6 +7,8 @@ from twitter.models import CityTweet
 from twitter.utils import get_spark
 
 
+# TODO: https://gist.github.com/Miserlou/11500b2345d3fe850c92
+
 # https://en.wikipedia.org/wiki/List_of_United_States_cities_by_population
 cities = [
     'new york',
@@ -71,14 +73,14 @@ def match_city(tweet):
 
 
 @click.command()
-@click.option('--tweet_dir', default='data/tweets.parquet')
-@click.option('--result_path', default='data/cities.parquet')
-def main(tweet_dir, result_path):
+@click.option('--src', default='data/tweets.parquet')
+@click.option('--dest', default='data/cities.parquet')
+def main(src, dest):
     """Get tweets for cities, using (stupid) string matching.
     """
     sc, spark = get_spark()
 
-    tweets = spark.read.parquet(tweet_dir)
+    tweets = spark.read.parquet(src)
 
     matches = tweets.rdd \
         .filter(lambda t: t.user.location) \
@@ -88,7 +90,7 @@ def main(tweet_dir, result_path):
 
     matches.write \
         .mode('overwrite') \
-        .parquet(result_path)
+        .parquet(dest)
 
     print(matches.count())
 

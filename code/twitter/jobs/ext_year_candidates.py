@@ -24,14 +24,14 @@ def match_years(text, padding=30):
 
 
 @click.command()
-@click.option('--tweet_dir', default='data/tweets.parquet')
-@click.option('--result_path', default='data/years.csv')
-def main(tweet_dir, result_path):
+@click.option('--src', default='data/tweets.parquet')
+@click.option('--dest', default='data/years.csv')
+def main(src, dest):
     """Extract 4-digit year candidates.
     """
     sc, spark = get_spark()
 
-    tweets = spark.read.parquet(tweet_dir)
+    tweets = spark.read.parquet(src)
 
     matches = tweets.rdd \
         .filter(lambda t: t.lang == 'en') \
@@ -41,7 +41,7 @@ def main(tweet_dir, result_path):
     matches.write \
         .mode('overwrite') \
         .option('header', 'true') \
-        .csv(result_path)
+        .csv(dest)
 
 
 if __name__ == '__main__':

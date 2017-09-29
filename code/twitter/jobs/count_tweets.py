@@ -7,13 +7,13 @@ from twitter.utils import get_spark
 
 
 @click.command()
-@click.option('--tweet_dir', default='data/tweets.parquet')
-def main(tweet_dir):
+@click.option('--src', default='data/tweets.parquet')
+def main(src):
     """Count tweets.
     """
     sc, spark = get_spark()
 
-    tweets = spark.read.parquet(tweet_dir)
+    tweets = spark.read.parquet(src)
     print(tweets.count())
 
 

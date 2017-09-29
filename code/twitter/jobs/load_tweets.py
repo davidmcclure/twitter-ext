@@ -24,20 +24,20 @@ def parse_minute(path):
 
 
 @click.command()
-@click.option('--in_dir', default='data/twitter-ia')
-@click.option('--out_dir', default='data/tweets.parquet')
-def main(in_dir, out_dir):
+@click.option('--src', default='data/twitter-ia')
+@click.option('--dest', default='data/tweets.parquet')
+def main(src, dest):
     """Ingest tweets.
     """
     sc, spark = get_spark()
 
-    paths = sc.parallelize(fs.scan(in_dir, '\.json'))
+    paths = sc.parallelize(fs.scan(src, '\.json'))
 
     rows = paths.flatMap(parse_minute)
 
     df = spark.createDataFrame(rows, Tweet.schema)
 
-    df.write.mode('overwrite').parquet(out_dir)
+    df.write.mode('overwrite').parquet(dest)
 
 
 if __name__ == '__main__':
