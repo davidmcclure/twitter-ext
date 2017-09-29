@@ -102,3 +102,4 @@ ENV/
 /docker/*.env
 spark-warehouse
 metastore_db
+*.vault.yml

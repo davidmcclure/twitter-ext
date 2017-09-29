@@ -56,4 +56,6 @@
   include_tasks: start.yml
   when: '"tag_mit_spark_worker" in group_names'
   vars:
-    command: spark-class org.apache.spark.deploy.worker.Worker
+    command:
+      'spark-class org.apache.spark.deploy.worker.Worker
+      {{ spark_master_url }}'
