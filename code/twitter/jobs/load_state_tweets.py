@@ -12,12 +12,12 @@ from twitter.utils import get_spark
 def match_state(tweet):
     """Probe for state.
     """
-    tokens = re.findall('[a-z]+', tweet.user.location, re.I)
+    tokens = re.findall('[a-z]+', tweet.actor.location, re.I)
     tokens_lower = map(str.lower, tokens)
 
     for state in us.states.STATES:
         if state.abbr in tokens or state.name.lower() in tokens_lower:
-            return StateTweet(state.abbr, tweet.user.location, tweet.text)
+            return StateTweet(state.abbr, tweet.actor.location, tweet.body)
 
 
 @click.command()
@@ -31,7 +31,7 @@ def main(src, dest):
     tweets = spark.read.parquet(src)
 
     matches = tweets.rdd \
-        .filter(lambda t: t.user.location and t.lang == 'en') \
+        .filter(lambda t: t.actor.location and t.actor.language == 'en') \
         .map(match_state) \
         .filter(bool) \
         .toDF(StateTweet.schema)

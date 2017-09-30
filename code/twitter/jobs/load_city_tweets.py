@@ -65,11 +65,11 @@ cities = [
 
 
 def match_city(tweet):
-    """Match (city, text) tuples.
+    """Probe for cities.
     """
     for city in cities:
-        if city in tweet.user.location.lower():
-            return CityTweet(city, tweet.user.location, tweet.text)
+        if city in tweet.actor.location.lower():
+            return CityTweet(city, tweet.actor.location, tweet.body)
 
 
 @click.command()
@@ -83,7 +83,7 @@ def main(src, dest):
     tweets = spark.read.parquet(src)
 
     matches = tweets.rdd \
-        .filter(lambda t: t.user.location) \
+        .filter(lambda t: t.actor.location and t.actor.language == 'en') \
         .map(match_city) \
         .filter(bool) \
         .toDF(CityTweet.schema)
