@@ -68,29 +68,29 @@ class Tweet(Model):
 
         return cls(
 
-            id=source['id'],
-            body=source['body'],
+            id=source.id(),
+            body=source.body(),
             posted_time=source.posted_time(),
 
             actor=dict(
-                id=source['actor', 'id'],
-                display_name=source['actor', 'displayName'],
-                summary=source['actor', 'summary'],
-                preferred_username=source['actor', 'preferredUsername'],
-                location=source['actor', 'location', 'displayName'],
+                id=source.actor_id(),
+                display_name=source.actor_display_name(),
+                summary=source.actor_summary(),
+                preferred_username=source.actor_preferred_username(),
+                location=source.actor_location(),
             ),
 
             location=dict(
-                display_name=source['location', 'displayName'],
-                name=source['location', 'name'],
-                country_code=source['location', 'countryCode'],
-                twitter_country_code=source['location', 'twitterCountryCode'],
-                twitter_place_type=source['location', 'twitterPlaceType'],
+                display_name=source.loc_display_name(),
+                name=source.loc_name(),
+                country_code=source.loc_country_code(),
+                twitter_country_code=source.loc_twitter_country_code(),
+                twitter_place_type=source.loc_twitter_place_type(),
             ),
 
             geo=dict(
-                lat=source.lat(),
-                lon=source.lon(),
+                lat=source.geo_lat(),
+                lon=source.geo_lon(),
             ),
 
         )

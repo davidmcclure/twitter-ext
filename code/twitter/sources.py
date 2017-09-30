@@ -1,51 +1,68 @@
 
 
 import iso8601
-import attr
 
-from functools import reduce
-
-
-@attr.s
-class NestedJSON:
-
-    tree = attr.ib()
-
-    def __getitem__(self, path):
-        """Look up a nested key, or return None if it doesn't exist.
-
-        Args:
-            path (tuple)
-        """
-        if not isinstance(path, tuple):
-            path = (path,)
-
-        def vivify(tree, level):
-
-            i, key = level
-
-            val = tree.get(key)
-
-            # If we're at the end of the path, return the value.
-            if i == len(path)-1:
-                return val
-
-            # Otherwise return the next sub-tree.
-            else:
-                return val if type(val) is dict else dict()
-
-        return reduce(vivify, enumerate(path), self.tree)
+from .utils import try_or_none
 
 
-class GnipTweet(NestedJSON):
+class GnipTweet(dict):
 
+    @try_or_none
+    def id(self):
+        return self['id']
+
+    @try_or_none
+    def body(self):
+        return self['body']
+
+    @try_or_none
     def posted_time(self):
         return iso8601.parse_date(self['postedTime'])
 
-    def lat(self):
-        coords = self['geo', 'coordinates']
-        return coords[0] if coords else None
+    @try_or_none
+    def actor_id(self):
+        return self['actor']['id']
 
-    def lon(self):
-        coords = self['geo', 'coordinates']
-        return coords[1] if coords else None
+    @try_or_none
+    def actor_display_name(self):
+        return self['actor']['displayName']
+
+    @try_or_none
+    def actor_summary(self):
+        return self['actor']['summary']
+
+    @try_or_none
+    def actor_preferred_username(self):
+        return self['actor']['preferredUsername']
+
+    @try_or_none
+    def actor_location(self):
+        return self['actor']['location']['displayName']
+
+    @try_or_none
+    def loc_display_name(self):
+        return self['location']['displayName']
+
+    @try_or_none
+    def loc_name(self):
+        return self['location']['name']
+
+    @try_or_none
+    def loc_country_code(self):
+        return self['location']['countryCode']
+
+    @try_or_none
+    def loc_twitter_country_code(self):
+        return self['location']['twitterCountryCode']
+
+    @try_or_none
+    def loc_twitter_place_type(self):
+        return self['location']['twitterPlaceType']
+
+    @try_or_none
+    def geo_lat(self):
+        return self['geo']['coordinates'][0]
+
+    @try_or_none
+    def geo_lon(self):
+        return self['geo']['coordinates'][1]
