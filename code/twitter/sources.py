@@ -7,41 +7,33 @@ from .utils import try_or_none
 
 class GnipTweet(dict):
 
-    @try_or_none
     def id(self):
         return self['id']
 
-    @try_or_none
     def body(self):
         return self['body']
 
-    @try_or_none
     def posted_time(self):
         return iso8601.parse_date(self['postedTime'])
 
-    @try_or_none
     def actor_id(self):
         return self['actor']['id']
 
-    @try_or_none
     def actor_display_name(self):
         return self['actor']['displayName']
 
-    @try_or_none
     def actor_summary(self):
         return self['actor']['summary']
 
-    @try_or_none
     def actor_preferred_username(self):
         return self['actor']['preferredUsername']
+
+    def actor_language(self):
+        return self['actor']['languages'][0]
 
     @try_or_none
     def actor_location(self):
         return self['actor']['location']['displayName']
-
-    @try_or_none
-    def actor_language(self):
-        return self['actor']['languages'][0]
 
     @try_or_none
     def loc_display_name(self):
