@@ -15,10 +15,15 @@ def parse_segment(path):
     with gzip.open(fs.read(path)) as fh:
         for line in fh.readlines():
 
-            raw = ujson.loads(line)
+            try:
 
-            if raw['verb'] == 'post':
-                yield Tweet.from_gnip_json(raw)
+                raw = ujson.loads(line)
+
+                if raw['verb'] == 'post':
+                    yield Tweet.from_gnip_json(raw)
+
+            except Exception as e:
+                print(e)
 
 
 @click.command()
