@@ -57,8 +57,8 @@ class GnipTweet(dict):
 
     @try_or_none
     def geo_lat(self):
-        return self['geo']['coordinates'][0]
+        return float(self['geo']['coordinates'][0])
 
     @try_or_none
     def geo_lon(self):
-        return self['geo']['coordinates'][1]
+        return float(self['geo']['coordinates'][1])

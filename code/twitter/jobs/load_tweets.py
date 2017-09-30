@@ -22,8 +22,8 @@ def parse_segment(path):
                 if raw['verb'] == 'post':
                     yield Tweet.from_gnip_json(raw)
 
-            except Exception as e:
-                print(e)
+            except ValueError as e:
+                pass
 
 
 @click.command()
