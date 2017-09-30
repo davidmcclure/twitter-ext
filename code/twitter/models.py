@@ -43,6 +43,7 @@ class Tweet(Model):
             T.StructField('summary', T.StringType()),
             T.StructField('preferred_username', T.StringType()),
             T.StructField('location', T.StringType()),
+            T.StructField('language', T.StringType()),
         ])),
 
         T.StructField('location', T.StructType([
@@ -78,6 +79,7 @@ class Tweet(Model):
                 summary=source.actor_summary(),
                 preferred_username=source.actor_preferred_username(),
                 location=source.actor_location(),
+                language=source.actor_language(),
             ),
 
             location=dict(

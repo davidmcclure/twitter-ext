@@ -40,6 +40,10 @@ class GnipTweet(dict):
         return self['actor']['location']['displayName']
 
     @try_or_none
+    def actor_language(self):
+        return self['actor']['languages'][0]
+
+    @try_or_none
     def loc_display_name(self):
         return self['location']['displayName']
 
