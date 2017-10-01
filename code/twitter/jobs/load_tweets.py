@@ -34,7 +34,9 @@ def main(src, dest):
     """
     sc, spark = get_spark()
 
-    paths = sc.parallelize(fs.scan(src, '\.json.gz'))
+    paths = list(fs.scan(src, '\.json.gz'))
+
+    paths = sc.parallelize(paths, len(paths))
 
     df = paths.flatMap(parse_segment).toDF(Tweet.schema)
 
