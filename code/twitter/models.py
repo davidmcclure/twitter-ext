@@ -1,6 +1,6 @@
 
 
-import iso8601
+import re
 
 from collections import namedtuple
 from pyspark.sql import SparkSession, types as T
@@ -20,13 +20,23 @@ class ModelMeta(type):
             # By default, default all fields to None.
             Row.__new__.__defaults__ = (None,) * len(Row._fields)
 
-            bases = (Row,)
+            bases = (Row,) + bases
 
         return super().__new__(meta, name, bases, dct)
 
 
 class Model(metaclass=ModelMeta):
-    pass
+
+    @classmethod
+    def from_rdd(cls, row):
+        """Wrap a raw `Row` instance from an RDD as a model instance.
+
+        Args:
+            row (pyspark.sql.Row)
+
+        Returns: Model
+        """
+        return cls(**row.asDict())
 
 
 class Tweet(Model):
@@ -96,6 +106,14 @@ class Tweet(Model):
             ),
 
         )
+
+    def tokens(self):
+        """Tokenize the tweet.
+        """
+        # Remove URLs.
+        text = re.sub('http\S+', '', self.body)
+
+        return re.findall('[a-z0-9#@]+', text.lower())
 
 
 class CityTweet(Model):
