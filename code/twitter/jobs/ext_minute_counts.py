@@ -2,15 +2,21 @@
 
 import click
 
+from wordfreq import top_n_list
+
 from twitter.utils import get_spark
 from twitter.models import Tweet
+
+
+whitelist = set(top_n_list('en', 10000))
 
 
 def count_tokens(tweet):
     """Generate (token, minute) keys.
     """
     for token in tweet.tokens():
-        yield ((token, tweet.posted_time.minute), 1)
+        if token in whitelist:
+            yield ((token, tweet.posted_time.minute), 1)
 
 
 def flatten_row(row):
