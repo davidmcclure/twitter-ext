@@ -2,8 +2,8 @@
 
 - name: Start container
   docker_container:
-    image: dclure/twitter-dev
-    name: twitter-dev
+    image: dclure/twitter-ext
+    name: twitter-ext
     command: '{{ command }}'
     state: started
     network_mode: host
