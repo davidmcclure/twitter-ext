@@ -7,15 +7,15 @@ from twitter.utils import get_spark
 
 
 @click.command()
-@click.option('--src', default='data/states.parquet')
+@click.option('--src', default='data/cities.parquet')
 def main(src):
-    """Count states.
+    """Count cities.
     """
     sc, spark = get_spark()
 
     df = spark.read.parquet(src)
 
-    df.groupBy('state').count().orderBy('count', ascending=False).show(100)
+    df.groupBy('key').count().orderBy('count', ascending=False).show(100)
 
 
 if __name__ == '__main__':

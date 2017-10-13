@@ -116,19 +116,10 @@ class Tweet(Model):
         return re.findall('[a-z0-9#@]+', text.lower())
 
 
-class CityTweet(Model):
+class GeoTweet(Model):
 
     schema = T.StructType([
-        T.StructField('city', T.StringType()),
-        T.StructField('location', T.StringType()),
-        T.StructField('text', T.StringType()),
-    ])
-
-
-class StateTweet(Model):
-
-    schema = T.StructType([
-        T.StructField('state', T.StringType()),
+        T.StructField('key', T.StringType()),
         T.StructField('location', T.StringType()),
         T.StructField('text', T.StringType()),
     ])

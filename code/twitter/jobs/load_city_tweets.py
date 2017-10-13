@@ -3,7 +3,7 @@
 import click
 
 from twitter import fs
-from twitter.models import CityTweet
+from twitter.models import GeoTweet
 from twitter.utils import get_spark
 
 
@@ -69,7 +69,7 @@ def match_city(tweet):
     """
     for city in cities:
         if city in tweet.actor.location.lower():
-            return CityTweet(city, tweet.actor.location, tweet.body)
+            return GeoTweet(city, tweet.actor.location, tweet.body)
 
 
 @click.command()
@@ -86,7 +86,7 @@ def main(src, dest):
         .filter(lambda t: t.actor.location and t.actor.language == 'en') \
         .map(match_city) \
         .filter(bool) \
-        .toDF(CityTweet.schema)
+        .toDF(GeoTweet.schema)
 
     matches.write \
         .mode('overwrite') \
