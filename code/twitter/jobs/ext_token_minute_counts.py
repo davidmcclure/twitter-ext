@@ -26,7 +26,7 @@ def flatten_row(row):
 
 @click.command()
 @click.option('--src', default='data/tweets.parquet')
-@click.option('--dest', default='data/minutes.json')
+@click.option('--dest', default='data/token-minute-counts.json')
 def main(src, dest):
     """Extract (token, minute, count) tuples.
     """
