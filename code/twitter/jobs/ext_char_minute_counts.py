@@ -31,7 +31,8 @@ def main(src, dest):
         .flatMap(count_chars) \
         .reduceByKey(lambda a, b: a + b) \
         .map(lambda r: (*r[0], r[1])) \
-        .toDF(('char', 'minute', 'count'))
+        .toDF(('char', 'minute', 'count')) \
+        .coalesce(1)
 
     counts.write \
         .mode('overwrite') \
