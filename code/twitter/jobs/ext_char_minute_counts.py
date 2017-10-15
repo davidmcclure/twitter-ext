@@ -2,28 +2,24 @@
 
 import click
 
-from wordfreq import top_n_list
-
 from twitter.utils import get_spark
 from twitter.models import Tweet
 
 
-whitelist = set(top_n_list('en', 10000))
-
-
-def count_tokens(tweet):
-    """Generate (token, minute) keys.
+def count_chars(tweet):
+    """Generate (char, minute) keys.
     """
-    for token in tweet.tokens():
-        if token in whitelist:
-            yield ((token, tweet.posted_time.minute), 1)
+    body = tweet.body.encode('ascii', 'ignore')
+
+    for char in str(body):
+        yield (char, tweet.posted_time.minute), 1
 
 
 @click.command()
 @click.option('--src', default='data/tweets.parquet')
-@click.option('--dest', default='data/token-minute-counts.json')
+@click.option('--dest', default='data/char-minute-counts.json')
 def main(src, dest):
-    """Extract (token, minute, count) tuples.
+    """Extract (char, minute, count) tuples.
     """
     sc, spark = get_spark()
 
@@ -32,10 +28,10 @@ def main(src, dest):
     counts = tweets.rdd \
         .map(Tweet.from_rdd) \
         .filter(lambda t: t.actor.language == 'en') \
-        .flatMap(count_tokens) \
+        .flatMap(count_chars) \
         .reduceByKey(lambda a, b: a + b) \
         .map(lambda r: (*r[0], r[1])) \
-        .toDF(('token', 'minute', 'count'))
+        .toDF(('char', 'minute', 'count'))
 
     counts.write \
         .mode('overwrite') \

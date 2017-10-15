@@ -28,11 +28,6 @@ def count_tokens(tweet):
             yield ((tweet.key, token), 1)
 
 
-def flatten_row(row):
-    (key, token), count = row
-    return key, token, count
-
-
 @click.command()
 @click.option('--src', default='data/states.parquet')
 @click.option('--dest', default='data/state-word-counts.json')
@@ -46,7 +41,7 @@ def main(src, dest):
     counts = tweets.rdd \
         .flatMap(count_tokens) \
         .reduceByKey(lambda a, b: a + b) \
-        .map(flatten_row) \
+        .map(lambda r: (*r[0], r[1])) \
         .toDF(('key', 'token', 'count'))
 
     counts.write \

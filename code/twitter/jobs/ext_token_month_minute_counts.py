@@ -23,11 +23,6 @@ def count_tokens(tweet):
             yield (token, month, minute), 1
 
 
-def flatten_row(row):
-    (token, month, minute), count = row
-    return token, month, minute, count
-
-
 @click.command()
 @click.option('--src', default='data/tweets.parquet')
 @click.option('--dest', default='data/token-month-minute-counts.json')
@@ -43,7 +38,7 @@ def main(src, dest):
         .filter(lambda t: t.actor.language == 'en') \
         .flatMap(count_tokens) \
         .reduceByKey(lambda a, b: a + b) \
-        .map(flatten_row) \
+        .map(lambda r: (*r[0], r[1])) \
         .toDF(('token', 'month', 'minute', 'count'))
 
     counts.write \
