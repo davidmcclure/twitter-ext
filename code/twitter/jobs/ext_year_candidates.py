@@ -6,7 +6,7 @@ import re
 from twitter.utils import get_spark
 
 
-YEAR_PATTERN = '([^0-9a-z_]|^)(?P<year>1[5-9][0-9]{2})([^0-9a-z_]|$)'
+YEAR_PATTERN = '([^\w]|^)(?P<year>1[5-9][0-9]{2})([^\w]|$)'
 
 
 def match_years(text, padding=30):
