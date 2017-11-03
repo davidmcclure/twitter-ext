@@ -8,7 +8,8 @@ from twitter.utils import get_spark
 @click.command()
 @click.option('--src', default='data/tweets.parquet')
 @click.option('--dest', default='data/locations.txt')
-def main(src, dest):
+@click.option('--fraction', default=0.1, type=float)
+def main(src, dest, fraction):
     """Dump location field examples.
     """
     sc, spark = get_spark()
@@ -19,7 +20,7 @@ def main(src, dest):
         .filter(tweets.actor.language=='en') \
         .filter(tweets.actor.location.isNotNull()) \
         .select(tweets.actor.location) \
-        .sample(False, 0.1)
+        .sample(False, fraction)
 
     examples.write.mode('overwrite').text(dest)
 
