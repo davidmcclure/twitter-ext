@@ -3,7 +3,7 @@
 
 Feature extraction harness for Twitter data.
 
-## Setup
+## Run local container
 
 1. Download [Docker](https://www.docker.com/docker-mac).
 
