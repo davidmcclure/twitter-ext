@@ -64,7 +64,7 @@ Once the image is built locally, it can be deployed as a standalone Spark cluste
 
 1. Update the image with `docker-compose build`. This will bake the current source code into the image.
 
-1. Push the image to Docker Hub with `docker push <user>/<repo>`. The first time, this will take a couple minutes to push up the whole image, which is ~1g. Subsequent pushes will be much faster, though, when just the source code layer is changed. **Important**: before pushing to a public repo, be sure that there aren't any config secrets baked into the image. The easiest approach is to just put everything in the `build/dev.env` file, which is patched in via docker-compose to the local dev environment, but not baked into the image itself.
+1. Push the image to Docker Hub with `docker push <user>/<repo>`. The first time, this will take a couple minutes to push up the whole image, which is ~1g. Subsequent pushes will be much faster, though, when just the source code layer is changed. **Important**: before pushing to a public repo, be sure that there aren't any config secrets baked into the image. The easiest approach is to just put everything in the `build/dev.env` file, which is patched into the local dev environment by docker-compose, but not baked into the underlying image itself.
 
 1. Open `deploy/roles/spark/tasks/start.yml` and update the `image` and `name` keys to match the image on Docker Hub. Eg:
 
@@ -115,11 +115,7 @@ Once the image is built locally, it can be deployed as a standalone Spark cluste
 
 1. On the local machine, run `aws configure` and provide credentials for the account that will house the cluster.
 
-1. Confirm that Ansible can access AWS by running:
-
-    `./ec2/ec2.py --refresh-cache`
-
-  If this gives a JSON blob of AWS resources for the correct account, everything is good to go.
+1. Confirm that Ansible can access AWS by running `./ec2/ec2.py --refresh-cache`. If this gives a JSON blob of AWS resources for the correct account, everything is good to go.
 
 ### Create the base Docker AMI
 
@@ -141,7 +137,7 @@ First, we need to build a base Docker AMI. In theory, we could probably use one 
 
 Now, we're ready to deploy a Spark cluster. All of the above steps only have to be done once. Going forward, this is all we'll need to do.
 
-1. Check the instance type and count settings in `deploy/roles/ec2-instances/roles/worker/meta/main.yml`. I've been using c3.8xlarge's, which are a nice mix of performance (32 cores, 60g ram, 320g SSDs) and cost ($1.6/hour). Depending on the size of the job, I've been using anywhere from 2-10 workers. Keep in mind that, with 10 nodes, this will run $16/hour, which, if you forget to take down the cluster at the end, will add up quickly. The advantage to this whole system, though, is that deploying a cluster is very quick - about ~2-3 minutes - so it's reasonable to put up a cluster on a per-job basis. Eg, put up 20 nodes, run a job on 640 cores for 30 minutes, and then take it down immediately when it finishes, for a cost ~$10.
+1. Check the instance type and count settings in `deploy/roles/ec2-instances/roles/worker/meta/main.yml`. I've been using c3.8xlarge's, which are a nice mix of performance (32 cores, 60g ram, 320g SSDs) and cost ($1.6/hour). Depending on the size of the job, I've been using anywhere from 2-10 workers. Keep in mind that, with 10 nodes, this will run $16/hour, which, if you forget to take down the cluster at the end, will add up quickly. The advantage to this whole system, though, is that deploying a cluster is very quick - about ~2-3 minutes - so it's reasonable to put up a cluster on a per-job basis. Eg, put up 20 nodes, run a job on 640 cores for 30 minutes, and then take it down immediately when it finishes, for a cost ~$10. See http://www.ec2instances.info for instance specs.
 
 1. Start the nodes with `ansible-playbook cluster.start.yml`, refresh the Ansible cache with `./ec2/ec2.py --refresh-cache`.
 
