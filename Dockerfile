@@ -51,8 +51,8 @@ RUN curl -sL --retry 3 \
  && mv /opt/$SPARK_PACKAGE $SPARK_HOME \
  && chown -R root:root $SPARK_HOME
 
-COPY docker/spark-env.sh $SPARK_HOME/conf
-COPY docker/spark-defaults.conf $SPARK_HOME/conf
+COPY build/spark-env.sh $SPARK_HOME/conf
+COPY build/spark-defaults.conf $SPARK_HOME/conf
 
 # Code
 

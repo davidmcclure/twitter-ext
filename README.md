@@ -1,10 +1,10 @@
 
 # Twitter + Spark
 
-Feature extraction harness for Twitter data.
+A feature extraction harness for Twitter data, designed for projects at the [Lab for Social Machines](http://socialmachines.media.mit.edu/).
 
-## Run local container
+## Build a development environment
 
-1. Download [Docker](https://www.docker.com/docker-mac).
+1. Download and install [Docker](https://www.docker.com/docker-mac).
 
 1. To run a local container: `docker-compose run dev bash`
