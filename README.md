@@ -64,6 +64,8 @@ Once the image is built locally, it can be deployed as a standalone Spark cluste
 
 1. Update the image with `docker-compose build`. This will bake the current source code into the image.
 
+1. Log in to Docker Hub with `docker login`.
+
 1. Push the image to Docker Hub with `docker push <user>/<repo>`. The first time, this will take a couple minutes to push up the whole image, which is ~1g. Subsequent pushes will be much faster, though, when just the source code layer is changed. **Important**: before pushing to a public repo, be sure that there aren't any config secrets baked into the image. The easiest approach is to just put everything in the `build/dev.env` file, which is patched into the local dev environment by docker-compose, but not baked into the underlying image itself.
 
 1. Open `deploy/roles/spark/tasks/start.yml` and update the `image` and `name` keys to match the image on Docker Hub. Eg:
