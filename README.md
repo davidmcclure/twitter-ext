@@ -5,9 +5,7 @@ A feature extraction harness for Twitter data, designed for projects at the [Lab
 
 ## Build a development environment
 
-Though in the future it might make sense to abstract this out into a fully
-generic image for multiple projects, for now this assumes that you're working
-with a project-specific fork of this repository.
+Though in the future it might make sense to abstract this out into a fully generic template, for now this assumes that you're working with a project-specific fork of this repository.
 
 1. Download and install [Docker](https://www.docker.com/docker-mac).
 
