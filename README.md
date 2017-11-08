@@ -29,6 +29,27 @@ In the container, you'll get a fully configured installation of Java 8, Spark 2.
 
   `spark-submit twitter/jobs/load_tweets.py -- --src /data/gnip`
 
-## Deploy standalone Spark cluster to EC2
+- The code abstracts over the differences between reading / writing data from the local filesystem versus S3. Eg, you could also just pass in an S3 URI (using the `s3a` protocol), and the code will automatically detect the S3 path and act accordingly.
 
-TODO
+  `spark-submit twitter/jobs/load_tweets.py -- --src s3a://bucket/twitter`
+
+  To get this functionality with new jobs, use the `twitter.fs` module when listing / reading files.
+
+  ```python
+  from twitter import fs
+
+  # List files.
+  paths = fs.list('s3a://bucket/twitter')
+  paths = fs.list('/local/dir')
+
+  # Optionally, with a regex on the file name.
+  paths = fs.list('s3a://bucket/twitter', '\.json$')
+
+  # Read bytes.
+  data = fs.list('s3a://bucket/twitter/05.json.gz')
+  data = fs.list('/local/dir/05.json.gz')
+  ```
+
+## Deploy cluster to EC2
+
+Once the image is built locally, it can be deployed as a standalone Spark cluster on EC2. First we push the image to Docker hub, to make it available EC2 nodes, and then use Ansible to automate the process of spinning up the cluster, pulling the images, and running the containers under the right configuration on the master / worker nodes.
