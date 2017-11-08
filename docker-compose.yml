@@ -7,7 +7,7 @@ services:
     build: .
     image: dclure/twitter-ext
     env_file:
-      - docker/aws.env
+      - build/dev.env
     volumes:
       - ./code:/code
       - ./data:/data
