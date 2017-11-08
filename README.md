@@ -89,9 +89,9 @@ Once the image is built locally, it can be deployed as a standalone Spark cluste
 
 1. Create an AWS security group called `spark` with these ports:
 
-    - 0 - 65535 open for nodes in the `spark` group. (Necessary because Spark uses random port allocation for master <-> worker communication.)
-    - 22 (SSH) for Ansible.
-    - 8080 for the Spark web console.
+    - `0-65535` for nodes in the `spark` group. (Necessary because Spark uses random port allocation for master <-> worker communication.)
+    - `22` (SSH) for Ansible.
+    - `8080` for the Spark web console.
 
 1. Create an AWS subnet and keypair, if necessary. In `deploy/roles/ec2-instance/defaults/main.yml`, update `ec2_keypair` and `ec2_subnet`.
 
@@ -101,7 +101,7 @@ Once the image is built locally, it can be deployed as a standalone Spark cluste
 
     `ansible-vault create group_vars/all/aws.vault.yml`
 
-  This will drop you into vim. We need to add two sets of AWS credentials - one for the cluster itself, which will be used by Ansible when creating / configuring the nodes, and another that will be used by the application codeSpark when running jobs.
+    This will drop you into vim. We need to add two sets of AWS credentials - one for the cluster itself, which will be used by Ansible when creating / configuring the nodes, and another that will be used by the application codeSpark when running jobs.
 
     ```yaml
     aws_access_key_id_ansible: XXX
@@ -111,7 +111,7 @@ Once the image is built locally, it can be deployed as a standalone Spark cluste
     aws_secret_access_key_spark: XXX
     ```
 
-  This distinction makes it possible, for example, to run the cluster nodes on a personal account, but read/write data owned by a different account. If everything is consolidated in a single account, just use the same credentials for both.
+    This distinction makes it possible, for example, to run the cluster nodes on a personal account, but read/write data owned by a different account. If everything is consolidated in a single account, just use the same credentials for both.
 
 1. On the local machine, run `aws configure` and provide credentials for the account that will house the cluster.
 
