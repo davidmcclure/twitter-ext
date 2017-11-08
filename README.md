@@ -27,6 +27,10 @@ In the container, you'll get a fully configured installation of Java 8, Spark 2.
 
 - All of the Spark executables are available globally. Eg, to get a Spark shell, just run `pyspark`, which will automatically run under the IPython interpreter installed via the project dependencies.
 
-- Run jobs with `spark-submit twitter/jobs/<name>.py`. To pass custom arguments to the jobs, use `--` to mark the beginning of the arguments (an IPython [quirk](https://stackoverflow.com/a/22632197)), and then pass arguments in the normal way. Eg, if we had some Gnip data in `./data/gnip`, to ingest the Tweets:
+- Run jobs with `spark-submit twitter/jobs/<name>.py`. To pass custom arguments to the jobs, use `--` to mark the beginning of the arg string (an IPython [quirk](https://stackoverflow.com/a/22632197)), and then pass arguments in the normal way. Eg, if we had some Gnip data in `./data/gnip`, to ingest the Tweets:
 
   `spark-submit twitter/jobs/load_tweets.py -- --src /data/gnip`
+
+## Deploy standalone Spark cluster to EC2
+
+TODO
