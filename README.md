@@ -29,7 +29,7 @@ In the container, you'll get a fully configured installation of Java 8, Spark 2.
 
   `spark-submit twitter/jobs/load_tweets.py -- --src /data/gnip`
 
-- The code abstracts over the differences between reading / writing data from the local filesystem versus S3. Eg, you could also just pass in an S3 URI (using the `s3a` protocol), and the code will automatically detect the S3 path and act accordingly.
+- The code abstracts over the differences between reading / writing data from the local filesystem versus S3. This makes it easy to test on small amounts of local data, and then scale up to very large inputs without changing the code. Eg, you could also just pass in an S3 URI (using the `s3a` protocol), and the code will automatically detect the S3 path and act accordingly.
 
   `spark-submit twitter/jobs/load_tweets.py -- --src s3a://bucket/twitter`
 
