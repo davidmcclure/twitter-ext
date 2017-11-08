@@ -131,7 +131,7 @@ First, we need to build a base Docker AMI. In theory, we could probably use one 
 
 1. In the AWS console, find the `docker-base` image that was created by Ansible. Right click on it, and then hit Image > Create Image.
 
-1. Wait until the image finishes, and then copy the AMD ID into `deploy/roles/ec2-instance/defaults/main.yml`, under `ec2_image`. This tells Ansible to use this image as the base for all of the cluster nodes.
+1. Wait until the image finishes, and then copy the AMI ID into `deploy/roles/ec2-instance/defaults/main.yml`, under `ec2_image`. This tells Ansible to use this image as the base for all of the cluster nodes.
 
 ### Deploy a cluster
 
