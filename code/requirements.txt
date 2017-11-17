@@ -12,4 +12,10 @@ iso8601
 attrs
 wordfreq
 
--e git+https://github.com/davidmcclure/litecoder#egg=litecoder
+sqlalchemy
+us
+boltons
+cached-property
+tqdm
+pytest
+PyYAML
