@@ -11,3 +11,5 @@ us
 iso8601
 attrs
 wordfreq
+
+-e git+https://github.com/davidmcclure/litecoder#egg=litecoder

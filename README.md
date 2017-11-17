@@ -87,6 +87,7 @@ Once the image is built locally, it can be deployed as a standalone Spark cluste
     ```
     virtualenv -p python2 env
     . env/bin/activate
+    pip install -r requirements.txt
     ```
 
 1. Create an AWS security group called `spark` with these ports:
