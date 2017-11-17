@@ -6,8 +6,8 @@ from twitter.utils import get_spark
 
 
 @click.command()
-@click.option('--src', default='data/tweets.parquet')
-@click.option('--dest', default='data/locations.txt')
+@click.option('--src', default='/data/tweets.parquet')
+@click.option('--dest', default='/data/locations.txt')
 @click.option('--fraction', default=0.1, type=float)
 def main(src, dest, fraction):
     """Dump location field examples.

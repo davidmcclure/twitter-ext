@@ -99,6 +99,7 @@ ENV/
 .mypy_cache/
 
 # twitter-ext
-spark-warehouse
-metastore_db
 *.vault.yml
+metastore_db
+spark-warehouse
+/code/src

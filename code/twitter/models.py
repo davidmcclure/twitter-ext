@@ -119,7 +119,19 @@ class Tweet(Model):
 class GeoTweet(Model):
 
     schema = T.StructType([
-        T.StructField('key', T.StringType()),
+
+        T.StructField('id', T.StringType()),
+        T.StructField('posted_time', T.TimestampType()),
+        T.StructField('actor_id', T.StringType()),
         T.StructField('location', T.StringType()),
-        T.StructField('text', T.StringType()),
+        T.StructField('body', T.StringType()),
+        T.StructField('twitter_lon', T.FloatType()),
+        T.StructField('twitter_lat', T.FloatType()),
+
+        T.StructField('state', T.StringType()),
+        T.StructField('city_geonameid', T.IntegerType()),
+        T.StructField('population', T.IntegerType()),
+        T.StructField('geonames_lon', T.FloatType()),
+        T.StructField('geonames_lat', T.FloatType()),
+
     ])
