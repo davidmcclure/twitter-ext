@@ -33,6 +33,7 @@ def geocode(tweet):
 
     if city:
         kwargs['city_geonameid'] = city.geonameid
+        kwargs['city_name'] = city.name
         kwargs['population'] = city.population
         kwargs['geonames_lon'] = city.longitude
         kwargs['geonames_lat'] = city.latitude

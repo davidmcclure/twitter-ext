@@ -130,6 +130,7 @@ class GeoTweet(Model):
 
         T.StructField('state', T.StringType()),
         T.StructField('city_geonameid', T.IntegerType()),
+        T.StructField('city_name', T.StringType()),
         T.StructField('population', T.IntegerType()),
         T.StructField('geonames_lon', T.FloatType()),
         T.StructField('geonames_lat', T.FloatType()),
