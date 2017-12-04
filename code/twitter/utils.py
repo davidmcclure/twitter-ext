@@ -8,6 +8,8 @@ import csv
 from pyspark import SparkContext
 from pyspark.sql import SparkSession
 
+from string import punctuation
+
 
 def get_spark():
     """Build sc and spark.
@@ -65,3 +67,12 @@ def try_or_none(f):
         except Exception as e:
             return None
     return wrapper
+
+
+def clean_tweet(text):
+    """Remove links, mentions, and hashtags.
+    """
+    text = re.sub('http\S+', ' ', text)
+    text = re.sub('\r\n', ' ', text)
+
+    return text.encode('ascii', 'ignore').decode('utf8')

@@ -6,22 +6,15 @@ import re
 from pyspark.sql import Row
 
 from twitter import fs
-from twitter.utils import get_spark, try_or_none
+from twitter.utils import get_spark, try_or_none, clean_tweet
 from twitter.models import GeoTweet
-
-
-def clean_tweet(text):
-    """Remove links, mentions, and hashtags.
-    """
-    text = re.sub('(#|@|http)\S+', '', text)
-    return text.lower()
 
 
 @click.command()
 @click.argument('states', nargs=-1)
 @click.option('--src', default='/data/geo-tweets.parquet')
 @click.option('--dest', default='/data/corpus.txt')
-@click.option('--partitions', default=10)
+@click.option('--partitions', default=100)
 def main(states, src, dest, partitions):
     """Dump state tweets for glove.
     """
