@@ -21,7 +21,8 @@ def clean_tweet(text):
 @click.argument('states', nargs=-1)
 @click.option('--src', default='/data/geo-tweets.parquet')
 @click.option('--dest', default='/data/corpus.txt')
-def main(states, src, dest):
+@click.option('--partitions', default=10)
+def main(states, src, dest, partitions):
     """Dump state tweets for glove.
     """
     sc, spark = get_spark()
@@ -33,9 +34,10 @@ def main(states, src, dest):
         .select('body')
         .rdd.map(lambda r: Row(body=clean_tweet(r['body'])))
         .toDF()
+        .coalesce(partitions)
     )
 
-    texts.write.text(dest)
+    texts.write.mode('overwrite').text(dest)
 
 
 if __name__ == '__main__':
