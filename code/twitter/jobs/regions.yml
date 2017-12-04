@@ -1,0 +1,59 @@
+---
+
+northeast:
+  - CT
+  - ME
+  - MA
+  - NH
+  - RI
+  - VT
+  - NJ
+  - NY
+  - PA
+
+midwest:
+  - IL
+  - IN
+  - MI
+  - OH
+  - WI
+  - IA
+  - KS
+  - MN
+  - MO
+  - NE
+  - ND
+  - SD
+
+south:
+  - DE
+  - FL
+  - GA
+  - MD
+  - NC
+  - SC
+  - VA
+  - WV
+  - AL
+  - KY
+  - MS
+  - TN
+  - AK
+  - LA
+  - OK
+  - TX
+
+west:
+  - AZ
+  - CO
+  - ID
+  - MT
+  - NV
+  - NM
+  - UT
+  - WY
+  - AK
+  - CA
+  - HI
+  - OR
+  - WA

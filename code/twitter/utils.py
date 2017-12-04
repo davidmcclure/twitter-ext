@@ -4,6 +4,7 @@ import re
 import os
 import scandir
 import csv
+import yaml
 
 from pyspark import SparkContext
 from pyspark.sql import SparkSession
@@ -76,3 +77,18 @@ def clean_tweet(text):
     text = re.sub('\r\n', ' ', text)
 
     return text.encode('ascii', 'ignore').decode('utf8')
+
+
+def read_yaml(root, *path_parts):
+    """Parse a YAML file relative to the passed path.
+
+    Args:
+        root (str)
+        path_parts (list of str)
+
+    Returns: dict
+    """
+    path = os.path.join(os.path.dirname(root), *path_parts)
+
+    with open(path, 'r') as fh:
+        return yaml.load(fh)
