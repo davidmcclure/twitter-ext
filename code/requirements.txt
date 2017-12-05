@@ -11,6 +11,8 @@ us
 iso8601
 attrs
 wordfreq
+gensim
+Cython
 
 sqlalchemy
 us
