@@ -35,9 +35,6 @@ def main(region, src, dest, partitions):
         .coalesce(partitions)
     )
 
-    print(states)
-    print(texts.count())
-
     texts.write.mode('overwrite').text(dest)
 
 

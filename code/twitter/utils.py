@@ -73,10 +73,18 @@ def try_or_none(f):
 def clean_tweet(text):
     """Remove links, mentions, and hashtags.
     """
-    text = re.sub('http\S+', ' ', text)
-    text = re.sub('\r\n', ' ', text)
+    # Remove links.
+    text = re.sub('http\S+', '', text)
 
-    return text.encode('ascii', 'ignore').decode('utf8')
+    # Remove hashtags and @'s.
+    text = re.sub('(#|@)\w+', '', text)
+
+    # Remove linebreaks.
+    text = re.sub('[\r\n]+', ' ', text)
+
+    text = text.lower()
+
+    return text
 
 
 def read_yaml(root, *path_parts):
