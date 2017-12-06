@@ -12,6 +12,13 @@ from pyspark.sql import SparkSession
 from string import punctuation
 
 
+TOKEN_RE = re.compile(u'[\w'
+    u'\U0001F300-\U0001F64F'
+    u'\U0001F680-\U0001F6FF'
+    u'\u2600-\u26FF\u2700-\u27BF]+',
+re.UNICODE)
+
+
 def get_spark():
     """Build sc and spark.
     """
@@ -73,18 +80,14 @@ def try_or_none(f):
 def clean_tweet(text):
     """Remove links, mentions, and hashtags.
     """
-    # Remove links.
+    # Remove links, hashtags, @s.
     text = re.sub('http\S+', '', text)
-
-    # Remove hashtags and @'s.
     text = re.sub('(#|@)\w+', '', text)
 
-    # Remove linebreaks.
-    text = re.sub('[\r\n]+', ' ', text)
+    # Match chars + emoji.
+    tokens = re.findall(TOKEN_RE, text.lower())
 
-    text = text.lower()
-
-    return text
+    return ' '.join(tokens)
 
 
 def read_yaml(root, *path_parts):
