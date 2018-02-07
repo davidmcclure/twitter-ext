@@ -5,7 +5,7 @@ import gzip
 import ujson
 
 from twitter import fs
-from twitter.utils import get_spark
+from twitter.spark import spark, sc
 from twitter.models import Tweet
 
 
@@ -32,8 +32,6 @@ def parse_segment(path):
 def main(src, dest):
     """Ingest tweets.
     """
-    sc, spark = get_spark()
-
     paths = list(fs.scan(src, '\.json.gz'))
 
     paths = sc.parallelize(paths, len(paths))
