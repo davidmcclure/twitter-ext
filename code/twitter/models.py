@@ -41,6 +41,7 @@ class Model(metaclass=ModelMeta):
 
 class Tweet(Model):
 
+    # TODO: Use flat schema.
     schema = T.StructType([
 
         T.StructField('id', T.StringType(), nullable=False),
@@ -114,12 +115,3 @@ class Tweet(Model):
         text = re.sub('http\S+', '', self.body)
 
         return re.findall('[a-z0-9#@]+', text.lower())
-
-
-class GeoTweet(Model):
-
-    schema = T.StructType([
-        T.StructField('key', T.StringType()),
-        T.StructField('location', T.StringType()),
-        T.StructField('text', T.StringType()),
-    ])
