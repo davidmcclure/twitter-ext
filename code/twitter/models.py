@@ -41,35 +41,23 @@ class Model(metaclass=ModelMeta):
 
 class Tweet(Model):
 
-    # TODO: Use flat schema.
     schema = T.StructType([
-
         T.StructField('id', T.StringType(), nullable=False),
         T.StructField('body', T.StringType()),
         T.StructField('posted_time', T.TimestampType()),
-
-        T.StructField('actor', T.StructType([
-            T.StructField('id', T.StringType()),
-            T.StructField('display_name', T.StringType()),
-            T.StructField('summary', T.StringType()),
-            T.StructField('preferred_username', T.StringType()),
-            T.StructField('location', T.StringType()),
-            T.StructField('language', T.StringType()),
-        ])),
-
-        T.StructField('location', T.StructType([
-            T.StructField('display_name', T.StringType()),
-            T.StructField('name', T.StringType()),
-            T.StructField('country_code', T.StringType()),
-            T.StructField('twitter_country_code', T.StringType()),
-            T.StructField('twitter_place_type', T.StringType()),
-        ])),
-
-        T.StructField('geo', T.StructType([
-            T.StructField('lat', T.FloatType()),
-            T.StructField('lon', T.FloatType()),
-        ])),
-
+        T.StructField('actor_id', T.StringType()),
+        T.StructField('actor_display_name', T.StringType()),
+        T.StructField('actor_summary', T.StringType()),
+        T.StructField('actor_preferred_username', T.StringType()),
+        T.StructField('actor_location', T.StringType()),
+        T.StructField('actor_language', T.StringType()),
+        T.StructField('location_display_name', T.StringType()),
+        T.StructField('location_name', T.StringType()),
+        T.StructField('location_country_code', T.StringType()),
+        T.StructField('location_twitter_country_code', T.StringType()),
+        T.StructField('location_twitter_place_type', T.StringType()),
+        T.StructField('geo_lat', T.FloatType()),
+        T.StructField('geo_lon', T.FloatType()),
     ])
 
     @classmethod
@@ -78,35 +66,10 @@ class Tweet(Model):
         """
         source = GnipTweet(json)
 
-        return cls(
-
-            id=source.id(),
-            body=source.body(),
-            posted_time=source.posted_time(),
-
-            actor=dict(
-                id=source.actor_id(),
-                display_name=source.actor_display_name(),
-                summary=source.actor_summary(),
-                preferred_username=source.actor_preferred_username(),
-                location=source.actor_location(),
-                language=source.actor_language(),
-            ),
-
-            location=dict(
-                display_name=source.loc_display_name(),
-                name=source.loc_name(),
-                country_code=source.loc_country_code(),
-                twitter_country_code=source.loc_twitter_country_code(),
-                twitter_place_type=source.loc_twitter_place_type(),
-            ),
-
-            geo=dict(
-                lat=source.geo_lat(),
-                lon=source.geo_lon(),
-            ),
-
-        )
+        return cls(**{
+            name: getattr(source, name)()
+            for name in cls.schema.names
+        })
 
     def tokens(self):
         """Tokenize the tweet.

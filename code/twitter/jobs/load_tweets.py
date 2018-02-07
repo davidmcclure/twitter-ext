@@ -27,8 +27,8 @@ def parse_segment(path):
 
 
 @click.command()
-@click.option('--src', default='data/twitter-lsm')
-@click.option('--dest', default='data/tweets.parquet')
+@click.option('--src', default='/data/twitter-lsm')
+@click.option('--dest', default='/data/tweets.parquet')
 def main(src, dest):
     """Ingest tweets.
     """

@@ -36,23 +36,23 @@ class GnipTweet(dict):
         return self['actor']['location']['displayName']
 
     @try_or_none
-    def loc_display_name(self):
+    def location_display_name(self):
         return self['location']['displayName']
 
     @try_or_none
-    def loc_name(self):
+    def location_name(self):
         return self['location']['name']
 
     @try_or_none
-    def loc_country_code(self):
+    def location_country_code(self):
         return self['location']['countryCode']
 
     @try_or_none
-    def loc_twitter_country_code(self):
+    def location_twitter_country_code(self):
         return self['location']['twitterCountryCode']
 
     @try_or_none
-    def loc_twitter_place_type(self):
+    def location_twitter_place_type(self):
         return self['location']['twitterPlaceType']
 
     @try_or_none
