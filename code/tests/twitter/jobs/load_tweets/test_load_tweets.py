@@ -6,14 +6,13 @@ import os
 from twitter.jobs.load_tweets import main
 from twitter.spark import spark
 
-from tests import FIXTURES_ROOT
 from tests.utils import read_yaml
 
 
 cases = read_yaml(__file__, 'cases.yml')
 
 
-src = os.path.join(FIXTURES_ROOT, 'twitter/decahose')
+src = os.path.join(os.path.dirname(__file__), 'fixtures')
 dest = '/tmp/tweets.parquet'
 
 
