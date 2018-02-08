@@ -98,7 +98,11 @@ ENV/
 # mypy
 .mypy_cache/
 
-# twitter-ext
-spark-warehouse
+# ----
+
 metastore_db
+spark-warehouse
 *.vault.yml
+.pytest_cache
+
+code/tests/fixtures

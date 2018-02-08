@@ -12,3 +12,4 @@ iso8601
 attrs
 wordfreq
 pytest
+findspark
