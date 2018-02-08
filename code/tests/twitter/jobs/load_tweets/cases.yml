@@ -20,7 +20,7 @@ tag:search.twitter.com,2005:913191523377872897:
   actor_preferred_username: nathansroses
   actor_location: marksloyals™, lil beeches™
 
-# 0005.json.gz
+# 0001.json.gz
 
 tag:search.twitter.com,2005:913192781220384775:
   body: That was a rocket...
@@ -38,3 +38,5 @@ tag:search.twitter.com,2005:913192781220339713:
   actor_display_name: yeebeyzy
   actor_summary: DJ4L ! dont dm me
   actor_preferred_username: yeebeyzy
+
+# TODO: Find examples with location / geo fields.
