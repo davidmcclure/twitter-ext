@@ -6,25 +6,23 @@ import os
 from twitter.jobs.load_tweets import main
 from twitter.spark import spark
 
+from tests import FIXTURES_ROOT
 from tests.utils import read_yaml
 
 
 cases = read_yaml(__file__, 'cases.yml')
 
 
-fixture_path = os.path.join(
-    os.path.dirname(__file__),
-    'fixtures/twitter/decahose',
-)
+src = os.path.join(FIXTURES_ROOT, 'twitter/decahose')
+dest = '/tmp/tweets.parquet'
 
 
 @pytest.fixture(scope='module')
 def tweets():
-    """Run job, provide output DF.
+    """Run job, read output DF.
     """
-    main.callback(fixture_path, '/tmp/tweets.parquet')
-
-    return spark.read.parquet('/tmp/tweets.parquet')
+    main.callback(src, dest)
+    return spark.read.parquet(dest)
 
 
 @pytest.mark.parametrize('id,fields', cases.items())
