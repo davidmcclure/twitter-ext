@@ -8,4 +8,4 @@ from pyspark.sql import SparkSession
 
 sc = SparkContext.getOrCreate()
 
-spark = SparkSession(sc).builder.getOrCreate()
+spark = SparkSession.builder.getOrCreate()

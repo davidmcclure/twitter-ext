@@ -11,3 +11,4 @@ us
 iso8601
 attrs
 wordfreq
+pytest
