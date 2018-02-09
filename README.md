@@ -1,11 +1,9 @@
 
-# Twitter + Spark
+# Spark ETL
 
-A feature extraction harness for Twitter data, designed for projects at the [Lab for Social Machines](http://socialmachines.media.mit.edu/).
+Spark ETL harness, designed for projects at the [Lab for Social Machines](http://socialmachines.media.mit.edu/) and [Cortico](https://www.cortico.ai/).
 
 ## Build a development environment
-
-Though in the future it might make sense to abstract this out into a fully generic template, for now this assumes that you're working with a project-specific fork of this repository.
 
 1. Download and install [Docker](https://www.docker.com/docker-mac).
 
@@ -25,29 +23,29 @@ In the container, you'll get a fully configured installation of Java 8, Spark 2.
 
 - All of the Spark executables are available globally. Eg, to get a Spark shell, just run `pyspark`, which will automatically run under the IPython interpreter installed via the project dependencies.
 
-- Run jobs with `spark-submit twitter/jobs/<name>.py`. To pass custom arguments to the jobs, use `--` to mark the beginning of the arg string (an IPython [quirk](https://stackoverflow.com/a/22632197)), and then pass arguments in the normal way. Eg, if we had some Gnip data in `./data/gnip`, to ingest the Tweets:
+- Run jobs with `spark-submit cortico_data/jobs/<name>.py`. To pass custom arguments to the jobs, use `--` to mark the beginning of the arg string (an IPython [quirk](https://stackoverflow.com/a/22632197)), and then pass arguments in the normal way. Eg, if we had some Gnip data in `./data/gnip`, to ingest the Tweets:
 
-    `spark-submit twitter/jobs/load_tweets.py -- --src /data/gnip`
+    `spark-submit cortico_data/jobs/load_tweets.py -- --src /data/gnip`
 
 - The code abstracts over the differences between reading / writing data from the local filesystem versus S3. This makes it easy to test on small samples of data on the local disk, and then scale up to very large inputs without changing the code. Eg, you could also just pass in an S3 key (using the `s3a` protocol), and the code will automatically detect the S3 path and act accordingly.
 
-    `spark-submit twitter/jobs/load_tweets.py -- --src s3a://bucket/twitter`
+    `spark-submit cortico_data/jobs/load_tweets.py -- --src s3a://bucket/twitter`
 
-  To get this functionality with new jobs, use the `twitter.fs` module when listing / reading files.
+  To get this functionality with new jobs, use the `cortico_data.fs` module when listing / reading files.
 
     ```python
-    from twitter import fs
+    from cortico_data import fs
 
     # List files.
-    paths = fs.list('s3a://bucket/twitter')
-    paths = fs.list('/local/dir')
+    paths = fs.scan('s3a://bucket/twitter')
+    paths = fs.scan('/local/dir')
 
     # Optionally, with a regex on the file name.
-    paths = fs.list('s3a://bucket/twitter', '\.json$')
+    paths = fs.scan('s3a://bucket/twitter', '\.json$')
 
     # Read bytes.
-    data = fs.list('s3a://bucket/twitter/05.json.gz')
-    data = fs.list('/local/dir/05.json.gz')
+    data = fs.read('s3a://bucket/twitter/05.json.gz')
+    data = fs.read('/local/dir/05.json.gz')
     ```
 
 ## Deploy cluster to EC2
@@ -60,7 +58,7 @@ Once the image is built locally, it can be deployed as a standalone Spark cluste
 
 1. Create a new repository on Docker hub to house the image.
 
-1. In `docker-compose.yml`, be sure that the `image` key matches the Hub user / repo name. Eg, if the user account is `lsm`, and the repo is called `twitter`, use `lsm/twitter` as the image name.
+1. In `docker-compose.yml`, be sure that the `image` key matches the Hub user / repo name. Eg, if the user account is `cortico`, and the repo is called `etl`, use `cortico/etl` as the image name.
 
 1. Update the image with `docker-compose build`. This will bake the current source code into the image.
 
@@ -73,8 +71,8 @@ Once the image is built locally, it can be deployed as a standalone Spark cluste
     ```yaml
     - name: Start container
       docker_container:
-        image: lsm/twitter
-        name: twitter
+        image: cortico/etl
+        name: etl
         ...
     ```
 
@@ -97,7 +95,7 @@ Once the image is built locally, it can be deployed as a standalone Spark cluste
 
 1. Create an AWS subnet and keypair, if necessary. In `deploy/roles/ec2-instance/defaults/main.yml`, update `ec2_keypair` and `ec2_subnet`.
 
-1. Create a file at `~/.twitter-ext.txt` and enter a strong password for Ansible Vault on the first line (used to encrypt secrets in config files).
+1. Create a file at `~/.cortico-data.txt` and enter a strong password for Ansible Vault on the first line (used to encrypt secrets in config files).
 
 1. Next, we'll provide AWS credenials in an encrypted vault file. From `./deploy` (with the `ansible.cfg` file in the working directory) Use Ansible Vault to create the file:
 
@@ -159,4 +157,4 @@ Now, we're ready to deploy a Spark cluster. All of the above steps only have to 
 
 1. Now, run jobs just like in the local development envirnoment:
 
-    `spark-submit twitter/jobs/load_tweets.py -- --src s3a://bucket/twitter --dest s3a://bucket/result.parquet`
+    `spark-submit cortico_data/jobs/load_tweets.py -- --src s3a://bucket/twitter --dest s3a://bucket/result.parquet`
