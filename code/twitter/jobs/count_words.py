@@ -4,7 +4,7 @@ import click
 
 from operator import add
 
-from twitter.spark import spark
+from twitter.services import spark
 from twitter.models import Tweet
 
 

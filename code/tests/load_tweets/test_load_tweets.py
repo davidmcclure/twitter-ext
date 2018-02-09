@@ -4,7 +4,7 @@ import pytest
 import os
 
 from twitter.jobs.load_tweets import main
-from twitter.spark import spark
+from twitter.services import spark
 
 from tests.utils import read_yaml
 

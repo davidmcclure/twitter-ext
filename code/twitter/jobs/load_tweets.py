@@ -5,7 +5,7 @@ import gzip
 import ujson
 
 from twitter import fs
-from twitter.spark import spark, sc
+from twitter.services import spark, sc
 from twitter.models import Tweet
 
 
