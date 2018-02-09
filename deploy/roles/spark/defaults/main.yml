@@ -1,5 +1,8 @@
 ---
 
+docker_image: XXX
+docker_name: XXX
+
 # spark-defaults.conf
 # -------------------
 

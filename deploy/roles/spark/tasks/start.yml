@@ -2,8 +2,8 @@
 
 - name: Start container
   docker_container:
-    image: XXX
-    name: cortico-data
+    image: '{{ docker_image }}'
+    name: '{{ docker_name }}'
     command: '{{ command }}'
     state: started
     network_mode: host
