@@ -2,8 +2,8 @@
 
 - name: Start container
   docker_container:
-    image: dclure/twitter-ext
-    name: twitter-ext
+    image: XXX
+    name: cortico-data
     command: '{{ command }}'
     state: started
     network_mode: host

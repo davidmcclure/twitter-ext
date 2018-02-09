@@ -2,8 +2,8 @@
 
 ec2_image: ami-75fc0d0f
 ec2_instance_count: 1
-ec2_subnet: subnet-52f7fb68
-ec2_keypair: dclure
+ec2_subnet: XXX
+ec2_keypair: XXX
 
 # Role
 ec2_name: null
