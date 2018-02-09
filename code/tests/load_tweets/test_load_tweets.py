@@ -3,8 +3,8 @@
 import pytest
 import os
 
-from twitter.jobs.load_tweets import main
-from twitter.services import spark
+from cortico_data.jobs.load_tweets import main
+from cortico_data.services import spark
 
 from tests.utils import read_yaml
 

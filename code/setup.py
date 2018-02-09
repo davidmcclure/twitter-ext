@@ -4,9 +4,9 @@ from setuptools import setup, find_packages
 
 
 setup(
-    name='twitter-ext',
+    name='cortico-data',
     version='0.1.0',
-    description='Feature extraction for Twitter data.',
+    description='Data warehousing.',
     url='https://github.com/davidmcclure/twitter-ext',
     license='MIT',
     author='David McClure',

@@ -4,9 +4,9 @@ import click
 import gzip
 import ujson
 
-from twitter import fs
-from twitter.services import spark, sc
-from twitter.models import Tweet
+from cortico_data import fs
+from cortico_data.services import spark, sc
+from cortico_data.models import Tweet
 
 
 def parse_segment(path):

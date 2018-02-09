@@ -4,8 +4,8 @@ import click
 
 from operator import add
 
-from twitter.services import spark
-from twitter.models import Tweet
+from cortico_data.services import spark
+from cortico_data.models import Tweet
 
 
 @click.command()
