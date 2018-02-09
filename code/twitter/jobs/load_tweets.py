@@ -19,6 +19,7 @@ def parse_segment(path):
 
                 raw = ujson.loads(line)
 
+                # TODO: Handle RTs.
                 if raw['verb'] == 'post':
                     yield Tweet.from_gnip_json(raw)
 
